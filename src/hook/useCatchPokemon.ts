@@ -3,6 +3,7 @@ import { useMutation } from "react-query";
 import { postData } from "../libs/axios/dataAPI";
 import { SpeciesRoot } from "../types/pokeTypes/speciesType";
 import { PokemonRoot } from "../types/pokeTypes/pokemonType";
+import getKoreanName from "../utils/getKoreanName";
 
 export interface PokeData {
     species: SpeciesRoot;
@@ -29,13 +30,16 @@ const useCatchPokemon = (data: PokeData | undefined | null) => {
             data.species.capture_rate &&
             Math.random() < data.species.capture_rate / 255;
         if (isSuccess) {
-            const typesName = data.pokemon.types.map((type) => type.type.name);
-            if (data.pokemon.id && typesName && data.species.names[2].name) {
+            const typesName = (data.pokemon.types ?? []).map(
+                (type) => type.type.name
+            );
+            const koreanName = getKoreanName(data.species.names);
+            if (data.pokemon.id && typesName && koreanName) {
                 const postPokeData = {
                     poke_id: data.pokemon.id,
                     type: typesName,
-                    name: data.species.names[2].name,
-                    url: data.pokemon.sprites.other.showdown.front_default,
+                    name: koreanName,
+                    url: data.pokemon.sprites?.other?.showdown?.front_default,
                     background: data.species.color.name,
                 };
                 mutate(postPokeData);

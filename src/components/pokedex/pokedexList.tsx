@@ -13,6 +13,7 @@ import PokemonCard from "../commons/pokemonCard";
 import Overlay from "../commons/overlay";
 import PoketMonDetailPage from "../../pages/poketMonDetailPage";
 import convertToPokemon from "../../utils/pokedexConvertToPokemon";
+import getKoreanName from "../../utils/getKoreanName";
 import { useInView } from "react-intersection-observer";
 
 const PokemonInfiniteList = () => {
@@ -70,11 +71,13 @@ const PokemonInfiniteList = () => {
                     <PokemonCard
                       key={poke.pokemon.id}
                       poke_id={poke.pokemon.id}
-                      name={poke.species.names[2].name}
-                      type={poke.pokemon.types.map(
+                      name={getKoreanName(poke.species.names)}
+                      type={(poke.pokemon.types ?? []).map(
                         (typeInfo) => typeInfo.type.name as PokedexConvertType,
                       )}
-                      url={poke?.pokemon.sprites.other.showdown.front_default}
+                      url={
+                        poke?.pokemon.sprites?.other?.showdown?.front_default
+                      }
                       onClick={() => handlePokeClick(poke)}
                     />
                   </div>

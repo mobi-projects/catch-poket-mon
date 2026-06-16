@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(git commit -m 'fix: 도감/포획 렌더 시 undefined.map 크래시 방지 *)"
+    ]
+  }
+}

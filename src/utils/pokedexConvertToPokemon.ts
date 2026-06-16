@@ -3,15 +3,16 @@ import {
     PokedexConvertType,
     PokemonData,
 } from "../types/pokeTypes/pokemonData";
+import getKoreanName from "./getKoreanName";
 
 const convertToPokemon = (pokeDetail: PokeDetails): PokemonData => {
     return {
         poke_id: pokeDetail.pokemon.id,
-        name: pokeDetail.species.names[2].name,
-        type: pokeDetail.pokemon.types.map(
+        name: getKoreanName(pokeDetail.species.names),
+        type: (pokeDetail.pokemon.types ?? []).map(
             (typeInfo) => typeInfo.type.name as PokedexConvertType
         ),
-        url: pokeDetail.pokemon.sprites.other.showdown.front_default,
+        url: pokeDetail.pokemon.sprites?.other?.showdown?.front_default,
         onClick: () => {},
 
         id: pokeDetail.pokemon.id,
